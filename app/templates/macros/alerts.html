@@ -1,0 +1,25 @@
+{% macro error(form) %}
+    {% for field in form.errors %}
+        {% for error in form.errors[field] %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger"><strong>{{form[field].label}}</strong>: {{error}}</div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro alert() %}
+    {% with messages = get_flashed_messages(with_categories = True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+{% endmacro %}

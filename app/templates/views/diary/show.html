@@ -1,0 +1,110 @@
+{% extends "assets/view_base.html" %}
+{% from "macros/alerts.html" import error, alert %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">{{ title }}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-9">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-edit fa-fw"></i> Diary Detail
+            </div>
+            <div class="panel-body">
+                <form id="form" action="{{ url_for('diary.create_or_update') }}" method="POST">
+                    {{ form.csrf_token() }}
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                {{ form.title(class='form-control') }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {{ form.date(class='form-control', value=navigation['day'].date()) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ form.content(class='form-control', rows=20) }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form.submit(class="btn btn-default pull-right") }}
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-calendar fa-fw"></i> Calendar
+                        <div class="pull-right">
+                            <a type="button" class="btn btn-default btn-xs" href="{{ url_for('diary.index') }}">Today</a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <a type="button" class="btn btn-default btn-xs pull-left" href="{{ url_for('diary.show', date=navigation['previous'].date()) }}">
+                                        <li class="fa fa-angle-double-left"></li> Previous Day
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+                                    <center>{{ navigation['day'].date() }}</center>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <a type="button" class="btn btn-default btn-xs pull-right" href="{{ url_for('diary.show', date=navigation['next'].date()) }}">
+                                        Next Day <li class="fa fa-angle-double-right"></li>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    $(document).ready(function() {
+        $('form').submit(function (e) {
+            var url = "{{ url_for('diary.create_or_update') }}";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $('form').serialize(),
+                success: function (data) {
+                    Swal.fire(
+                      'İşlem Onaylandı!',
+                      'Veriler Kaydedildi & Güncellendi',
+                      'success'
+                    )
+                },
+                error: function(data) {
+                    Swal.fire(
+                        'Hata!',
+                        'Veriler İşlenemedi',
+                        'error'
+                    )
+                }
+            });
+            e.preventDefault();
+        });
+    });
+</script>
+{% endblock %}
