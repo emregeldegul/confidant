@@ -1,7 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.fields.html5 import DateField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, length
+from flask_login import current_user
+
+from app.models.user import User
 
 class ProfileEditForm(FlaskForm):
     name = StringField('Name',
@@ -24,3 +27,25 @@ class ProfileEditForm(FlaskForm):
 
         if user:
             raise ValidationError('User is available.')
+
+class PasswordEditForm(FlaskForm):
+    current = PasswordField('Current',
+        validators=[DataRequired()],
+        render_kw={'placeholder': 'Curreny', 'autofocus': True}
+    )
+    new = PasswordField('New',
+        validators=[DataRequired(), length(min=6)],
+        render_kw={'placeholder': 'New'}
+    )
+    repeat_new = PasswordField('Re-Type New',
+        validators=[DataRequired(), EqualTo('new'), length(min=6)],
+        render_kw={'placeholder': 'Re-Type New'}
+    )
+
+    submit = SubmitField('Update')
+
+    def validate_current(self, current):
+        user = User.query.filter_by(id = current_user.id).first()
+
+        if not user.check_password(current.data):
+            raise ValidationError('Wrong Password')
