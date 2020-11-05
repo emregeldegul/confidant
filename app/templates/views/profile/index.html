@@ -1,5 +1,4 @@
 {% extends "assets/view_base.html" %}
-{% from "macros/alerts.html" import error, alert %}
 
 {% block content %}
     <div class="row">
@@ -8,10 +7,6 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            {{ error(password_form) }}
-            {{ alert() }}
-        </div>
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -19,8 +14,21 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <form role="form">
+                        <div class="col-lg-12">
+                            <form action="" method="POST" id="profile">
+                                {{ profile_form.csrf_token() }}
+                                <div class="form-group">
+                                    {{ profile_form.name(class="form-control") }}
+                                </div>
+                                <div class="form-group">
+                                    {{ profile_form.birthday(class="form-control") }}
+                                </div>
+                                <div class="form-group">
+                                    {{ profile_form.email(class="form-control") }}
+                                </div>
+                                <div class="pull-right">
+                                    {{ profile_form.submit(class="btn btn-default") }}
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -35,7 +43,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form action="" method="POST">
+                            <form action="" method="POST" id="password">
                                 {{ password_form.csrf_token() }}
                                 <div class="form-group">
                                     {{ password_form.current(class="form-control") }}
@@ -56,4 +64,77 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    $(document).ready(function() {
+        $('#profile').submit(function (e) {
+            var url = "{{ url_for('profile.edit') }}";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $('#profile').serialize(),
+                success: function (data) {
+                    if(data.status=="success"){
+                        Swal.fire(
+                          'İşlem Onaylandı!',
+                          'Veriler Kaydedildi & Güncellendi',
+                          'success'
+                        )
+                    }else {
+                        Swal.fire(
+                          'İşlem Onaylanmadı',
+                          'Bir Hata Oluştu',
+                          'error'
+                        )
+                    }
+                },
+                error: function(data) {
+                    Swal.fire(
+                        'Hata!',
+                        'Veriler İşlenemedi',
+                        'error'
+                    )
+                }
+            });
+            e.preventDefault();
+        });
+
+        $('#password').submit(function (e) {
+            var url = "{{ url_for('profile.password') }}";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $('#password').serialize(),
+                success: function (data) {
+                    if(data.status=="success"){
+                        Swal.fire(
+                          'İşlem Onaylandı!',
+                          'Veriler Kaydedildi & Güncellendi',
+                          'success'
+                        )
+                    }else {
+                        Swal.fire(
+                          'İşlem Onaylanmadı',
+                          'Bir Hata Oluştu',
+                          'error'
+                        )
+                    }
+                },
+                error: function(data) {
+                    Swal.fire(
+                        'Hata!',
+                        'Veriler İşlenemedi',
+                        'error'
+                    )
+                }
+            });
+            e.preventDefault();
+        });
+    });
+</script>
 {% endblock %}

@@ -26,7 +26,8 @@ class ProfileEditForm(FlaskForm):
         user = User.query.filter_by(email = email.data).first()
 
         if user:
-            raise ValidationError('User is available.')
+            if not user == current_user:
+                raise ValidationError('email is available.')
 
 class PasswordEditForm(FlaskForm):
     current = PasswordField('Current',
