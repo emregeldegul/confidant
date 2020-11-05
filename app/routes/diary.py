@@ -35,11 +35,11 @@ def show(date):
     }
 
     if day:
-        form.title.data = day.title
-        form.content.data = day.content
+        form.title.data = day.show_title()
+        form.content.data = day.show_content()
         form.date.data = day.date
 
-        title = "{}".format(day.title)
+        title = "{}".format(day.show_title())
     else:
         title = "No Story Added for Today"
 
@@ -58,21 +58,20 @@ def create_or_update():
     day = Diary.query.filter_by(user=current_user).filter_by(date=date).first()
 
     if day:
-        day.title = form.title.data
-        day.content = form.content.data
+        day.save_title(form.title.data)
+        day.save_content(form.content.data)
 
         db.session.commit()
 
         return jsonify({'status': 'update'})
     else:
-        print(form.date.data)
-        print(type(form.date.data))
         diary = Diary(
             user = current_user,
-            title = form.title.data,
-            content = form.content.data,
             date = datetime.strptime(form.date.data, '%Y-%m-%d'),
         )
+
+        diary.save_title(form.title.data)
+        diary.save_content(form.content.data)
 
         db.session.add(diary)
         db.session.commit()

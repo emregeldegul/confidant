@@ -25,7 +25,7 @@
                         {% for diary in diaries %}
                             <tr class="gradeU">
                                 <td>{{ diary.date }}</td>
-                                <td>{{ diary.title }}</td>
+                                <td>{{ diary.show_title() }}</td>
                                 <td><a href="{{ url_for('diary.show', date =  diary.date) }}">Read</a></td>
                             </tr>
                         {% endfor %}

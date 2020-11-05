@@ -26,8 +26,8 @@ And login by creating a membership.
 ## To Do
 
 - [x] Multi User
-- [ ] Editing Profile / Password
-- [ ] Saving Diaries with Encryption
+- [x] Editing Profile / Password
+- [x] Saving Diaries with Encryption
 
 ## Used Technologies
 

@@ -10,3 +10,20 @@ class Diary(db.Model):
 
     def __str__(self):
         return "<Diary: {}: {} ({})>".format(self.user.name, self.title, self.date)
+
+    def encryption(self, text, key):
+        asciimap = lambda character: ord(character)+key
+        charmap = lambda character: chr(character)
+        return "".join(map(charmap, map(asciimap, list(text))))
+
+    def save_title(self, title):
+        self.title = self.encryption(title, +3)
+
+    def show_title(self):
+        return self.encryption(self.title, -3)
+
+    def save_content(self, content):
+        self.content = self.encryption(content, +3)
+
+    def show_content(self):
+        return self.encryption(self.content, -3)
