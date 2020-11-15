@@ -12,7 +12,7 @@ Installation requires Python3 and Virtualenv.
 ~$ python3 -m virtualenv venv
 ~$ source venv/bin/activate
 ~$ pip install -r requirements.txt
-~$ python setup_db.py # Migration will be added.
+~$ flask db upgrade
 ~$ flask run
 ```
 
