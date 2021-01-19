@@ -4,7 +4,7 @@
 {% block content %}
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">{{ title }}</h1>
+        <h1 class="page-header" id="header-title">{{ title }}</h1>
     </div>
 </div>
 <div class="row">
@@ -83,6 +83,7 @@
     $(document).ready(function() {
         $('form').submit(function (e) {
             var url = "{{ url_for('diary.create_or_update') }}";
+            var title = document.getElementById("title").value;
 
             $.ajax({
                 type: "POST",
@@ -90,15 +91,17 @@
                 data: $('form').serialize(),
                 success: function (data) {
                     Swal.fire(
-                      'İşlem Onaylandı!',
-                      'Veriler Kaydedildi & Güncellendi',
+                      'Transaction Approved',
+                      'Saved & Uploaded',
                       'success'
-                    )
+                    ),
+                    document.getElementById("header-title").innerHTML = title;
+                    document.title = title + ' | Confidant';
                 },
                 error: function(data) {
                     Swal.fire(
-                        'Hata!',
-                        'Veriler İşlenemedi',
+                        'Error',
+                        'Something Went Wrong',
                         'error'
                     )
                 }

@@ -11,7 +11,7 @@ from app.forms.diary import DiaryCreateForm
 diary = Blueprint('diary', __name__, url_prefix='/diary')
 
 @diary.route('/')
-@diary.route('/index', methods=['GET', 'POST'])
+@diary.route('/index')
 @login_required
 def index():
     return redirect(url_for('diary.show', date=date.today()))
@@ -22,9 +22,6 @@ def show(date):
     form = DiaryCreateForm()
 
     day = Diary.query.filter_by(user=current_user).filter_by(date=date).first()
-
-    if form.validate_on_submit():
-        pass
 
     nav_date = datetime.strptime(date, '%Y-%m-%d')
 
@@ -51,10 +48,9 @@ def create_or_update():
     form = DiaryCreateForm()
 
     if not form.validate_on_submit():
-        return jsonify({'status': 'error', 'form': form.errors})
+        return jsonify({'status': 'error', 'form': form.errors}), 400
 
     date = form.date.data
-
     day = Diary.query.filter_by(user=current_user).filter_by(date=date).first()
 
     if day:

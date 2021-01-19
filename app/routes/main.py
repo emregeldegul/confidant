@@ -8,8 +8,3 @@ main = Blueprint('main', __name__, url_prefix='/')
 @login_required
 def index():
     return redirect(url_for('diary.index'))
-
-@main.route('/test')
-@login_required
-def test():
-    return 'ok'
