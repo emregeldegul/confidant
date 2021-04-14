@@ -1,8 +1,5 @@
 # Confidant
-
 Confidant is a simple web application that allows the diary to be stored on the web. Confidant has been and continues to be developed with Flask.
-
-<img src="https://i.hizliresim.com/GRzOM3.png">
 
 ## Installation
 Installation requires Python3 and Virtualenv.
@@ -22,15 +19,17 @@ Confidant URL: http://127.0.0.1:5000/
 
 And login by creating a membership.
 
-
 ## To Do
-
 - [x] Multi User
 - [x] Editing Profile / Password
 - [x] Saving Diaries with Encryption
 
-## Used Technologies
+#Screenshots
+![Diary Write And Detail](screenshots/diary_detail.png)
+![Login Panel](screenshots/login_panel.png)
+![Register Panel](screenshots/register_panel.png)
 
+## Used Technologies
 * [flask] - Micro web framework
 * [flask-sqlalchemy] - An extension for Flask that adds support for SQLAlchemy to your application.
 * [flask-bcrypt] - Flask extension that provides bcrypt hashing utilities for your application.
