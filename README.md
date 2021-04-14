@@ -24,9 +24,12 @@ And login by creating a membership.
 - [x] Editing Profile / Password
 - [x] Saving Diaries with Encryption
 
-#Screenshots
+## Screenshots
+### Diary Write and Detail
 ![Diary Write And Detail](screenshots/diary_detail.png)
+### Login Panel
 ![Login Panel](screenshots/login_panel.png)
+### Regster Panel
 ![Register Panel](screenshots/register_panel.png)
 
 ## Used Technologies
