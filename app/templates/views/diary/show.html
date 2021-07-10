@@ -14,7 +14,7 @@
                 <i class="fa fa-edit fa-fw"></i> Diary Detail
             </div>
             <div class="panel-body">
-                <form id="form" action="{{ url_for('diary.create_or_update') }}" method="POST">
+                <form id="form"class="createOrUpdate" action="{{ url_for('diary.create_or_update') }}" method="POST">
                     {{ form.csrf_token() }}
                     <div class="row">
                         <div class="col-md-9">
@@ -81,14 +81,14 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
     $(document).ready(function() {
-        $('form').submit(function (e) {
+        $('.createOrUpdate').submit(function (e) {
             var url = "{{ url_for('diary.create_or_update') }}";
             var title = document.getElementById("title").value;
 
             $.ajax({
                 type: "POST",
                 url: url,
-                data: $('form').serialize(),
+                data: $('.createOrUpdate').serialize(),
                 success: function (data) {
                     Swal.fire(
                       'Transaction Approved',

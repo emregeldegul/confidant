@@ -2,11 +2,14 @@ from datetime import datetime, timedelta, date
 from json import loads
 
 from flask import Blueprint, redirect, url_for, render_template, flash, jsonify
+from flask import request
 from flask_login import login_required, current_user
 
 from app import db
 from app.models.diary import Diary
 from app.forms.diary import DiaryCreateForm
+
+from app.plugins.searchEngine import SearchEngine
 
 diary = Blueprint('diary', __name__, url_prefix='/diary')
 
@@ -15,6 +18,23 @@ diary = Blueprint('diary', __name__, url_prefix='/diary')
 @login_required
 def index():
     return redirect(url_for('diary.show', date=date.today()))
+
+
+@diary.route('/search', methods=['POST'])
+@login_required
+def search():
+    # Fetch form details
+    searchString = request.form.get("searchString")
+
+    # Tokenize searchString by removing whitespace characters
+    keywords = searchString.split()
+
+    diaries = Diary.query.filter_by(user=current_user).all()
+    se = SearchEngine(diaries)
+    results = se.search(keywords)
+
+    return render_template('views/diary/search-results.html', title='Search Results', diaries=results)
+
 
 @diary.route('/<date>', methods=['GET', 'POST'])
 @login_required
