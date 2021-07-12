@@ -25,22 +25,22 @@ class SearchEngine():
     """Utility class that implements the searching algorithm.
     """
 
-    def __init__(self, diaries, titleWeight=50):
+    def __init__(self, diaries, title_weight=50):
         """`diaries` a list of Diary records to be searched and scored
 
-        `titleWeight` the weight that is given to the title over the contents of
+        `title_weight` the weight that is given to the title over the contents of
             a diary. It makes sense to calculate the importance of the
             title-occurance in words. E.g. If I assume that the word "beautiful"
             found in the title makes the Diary more relevant, like if I had found
-            it 50 times in the content, then I should use titleWeight=50. In
+            it 50 times in the content, then I should use title_weight=50. In
             other words the concept is:
-                occurance_in_title = titleWeight * occurance_in_content
+                occurance_in_title = title_weight * occurance_in_content
         """
 
         self.diaries = diaries
-        self.titleWeight = titleWeight
+        self.title_weight = title_weight
 
-    def _scoreDiary(self, diary, keywords):
+    def _score_diary(self, diary, keywords):
         """Scoring algorithm.
 
         See module's docstring for more details...
@@ -57,11 +57,11 @@ class SearchEngine():
             content = diary.show_content().lower()
 
             # Score each part of the Diary depending on the number of occurancies
-            titleScore = title.count(key)
-            contentScore = content.count(key)
+            title_score = title.count(key)
+            content_score = content.count(key)
 
             # Give more weight to the keys found in title
-            score += titleScore*self.titleWeight + contentScore
+            score += title_score*self.title_weight + content_score
 
         return score
 
@@ -72,21 +72,21 @@ class SearchEngine():
         """
 
         # For each Diary, append its score along with itself into the
-        # relevanceList.
+        # relevance_list.
         # Each item in that list looks like:
         #    (score, Diary)
 
-        relevanceList = [
-            (self._scoreDiary(diary, keywords), diary)
+        relevance_list = [
+            (self._score_diary(diary, keywords), diary)
             for diary in self.diaries
         ]
 
         # Sort: place more relevant (high-scored) Diaries first
-        relevanceList.sort(key=lambda struct: struct[0], reverse=True)
+        relevance_list.sort(key=lambda struct: struct[0], reverse=True)
 
         # Clean: remove irrelevant (zero-occurancies)
         # After that operation, that list will look like:
         #    [Diary1, Diary2, Diary3, ...]
-        relevanceList = [x[1] for x in relevanceList if x[0] > 0]
+        relevance_list = [x[1] for x in relevance_list if x[0] > 0]
 
-        return relevanceList
+        return relevance_list

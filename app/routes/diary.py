@@ -9,7 +9,7 @@ from app import db
 from app.models.diary import Diary
 from app.forms.diary import DiaryCreateForm
 
-from app.plugins.searchEngine import SearchEngine
+from app.plugins.search_engine import SearchEngine
 
 diary = Blueprint('diary', __name__, url_prefix='/diary')
 
@@ -24,10 +24,10 @@ def index():
 @login_required
 def search():
     # Fetch form details
-    searchString = request.form.get("searchString")
+    search_string = request.form.get("searchString")
 
-    # Tokenize searchString by removing whitespace characters
-    keywords = searchString.split()
+    # Tokenize search_string by removing whitespace characters
+    keywords = search_string.split()
 
     diaries = Diary.query.filter_by(user=current_user).all()
     se = SearchEngine(diaries)
