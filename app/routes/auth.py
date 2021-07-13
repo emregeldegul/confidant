@@ -7,6 +7,7 @@ from app.forms.auth import RegisterForm, LoginForm
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
+
 @auth.route('/')
 @auth.route('/index')
 def index():

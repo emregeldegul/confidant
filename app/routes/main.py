@@ -1,7 +1,8 @@
-from flask import Blueprint, redirect, url_for, render_template
-from flask_login import current_user, login_required
+from flask import Blueprint, redirect, url_for
+from flask_login import login_required
 
 main = Blueprint('main', __name__, url_prefix='/')
+
 
 @main.route('/')
 @main.route('/index')

@@ -1,5 +1,6 @@
 from app import db
 
+
 class Diary(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -11,8 +12,9 @@ class Diary(db.Model):
     def __str__(self):
         return "<Diary: {}: {} ({})>".format(self.user.name, self.title, self.date)
 
-    def encryption(self, text, key):
-        asciimap = lambda character: ord(character)+key
+    @staticmethod
+    def encryption(text, key):
+        asciimap = lambda character: ord(character) + key
         charmap = lambda character: chr(character)
         return "".join(map(charmap, map(asciimap, list(text))))
 

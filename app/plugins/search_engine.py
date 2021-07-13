@@ -21,7 +21,7 @@ Usage:
 """
 
 
-class SearchEngine():
+class SearchEngine:
     """Utility class that implements the searching algorithm.
     """
 

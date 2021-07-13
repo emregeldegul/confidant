@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 from app.models.user import User
 
+
 class RegisterForm(FlaskForm):
     name = StringField('Name',
         validators=[DataRequired()], render_kw={'placeholder': 'Name', 'autofocus': True}

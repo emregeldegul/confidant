@@ -7,6 +7,7 @@ from app.forms.profile import PasswordEditForm, ProfileEditForm
 
 profile = Blueprint('profile', __name__, url_prefix='/profile')
 
+
 @profile.route('/')
 @profile.route('/index')
 @login_required
@@ -21,9 +22,10 @@ def index():
     profile_form.email.data = user.email
 
     return render_template('views/profile/index.html',
-        title = 'Edit Profile', profile_form = profile_form,
-        password_form = password_form
+        title='Edit Profile', profile_form = profile_form,
+        password_form=password_form
     )
+
 
 @profile.route('/edit', methods=['POST'])
 @login_required
@@ -41,6 +43,7 @@ def edit():
     db.session.commit()
 
     return jsonify({'status': 'success'})
+
 
 @profile.route('/password', methods=['POST'])
 @login_required

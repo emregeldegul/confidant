@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
@@ -8,6 +8,7 @@ from config import Config
 db = SQLAlchemy()
 login_manager = LoginManager()
 migrate = Migrate()
+
 
 def create_app():
     app = Flask(__name__)
@@ -24,7 +25,7 @@ def create_app():
     from app.routes.auth import auth
     app.register_blueprint(auth)
 
-    from app.routes.main import  main
+    from app.routes.main import main
     app.register_blueprint(main)
 
     from app.routes.diary import diary

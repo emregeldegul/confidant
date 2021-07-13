@@ -6,6 +6,7 @@ from flask_login import current_user
 
 from app.models.user import User
 
+
 class ProfileEditForm(FlaskForm):
     name = StringField('Name',
         validators=[DataRequired()], render_kw={'placeholder': 'Name', 'autofocus': True}
@@ -28,6 +29,7 @@ class ProfileEditForm(FlaskForm):
         if user:
             if not user == current_user:
                 raise ValidationError('email is available.')
+
 
 class PasswordEditForm(FlaskForm):
     current = PasswordField('Current',

@@ -29,7 +29,7 @@ And login by creating a membership.
 ![Diary Write And Detail](screenshots/diary_detail.png)
 ### Login Panel
 ![Login Panel](screenshots/login_panel.png)
-### Regster Panel
+### Register Panel
 ![Register Panel](screenshots/register_panel.png)
 
 ## Used Technologies

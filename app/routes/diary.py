@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta, date
-from json import loads
 
 from flask import Blueprint, redirect, url_for, render_template, flash, jsonify
 from flask import request
@@ -12,6 +11,7 @@ from app.forms.diary import DiaryCreateForm
 from app.plugins.search_engine import SearchEngine
 
 diary = Blueprint('diary', __name__, url_prefix='/diary')
+
 
 @diary.route('/')
 @diary.route('/index')
@@ -62,6 +62,7 @@ def show(date):
 
     return render_template('views/diary/show.html', title=title, form=form, navigation=navigation)
 
+
 @diary.route('/create_or_update', methods=['POST'])
 @login_required
 def create_or_update():
@@ -82,8 +83,8 @@ def create_or_update():
         return jsonify({'status': 'update'})
     else:
         diary = Diary(
-            user = current_user,
-            date = datetime.strptime(form.date.data, '%Y-%m-%d'),
+            user=current_user,
+            date=datetime.strptime(form.date.data, '%Y-%m-%d'),
         )
 
         diary.save_title(form.title.data)
@@ -93,6 +94,7 @@ def create_or_update():
         db.session.commit()
 
         return jsonify({'status': 'added'})
+
 
 @diary.route('/diaries')
 @login_required
