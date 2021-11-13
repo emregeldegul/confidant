@@ -33,7 +33,9 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        flash('Successful! You Can Login.', 'success')
+        login_user(user)
+        flash('Successful! Now You Can Add Your Thoughts Here.', 'success')
+        return redirect(url_for('main.index'))
 
     return render_template('views/auth/register.html', title='Register', form=form)
 
@@ -49,7 +51,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
 
         if user is None or not user.check_password(form.password.data):
-            flash('Login Failed', 'danger')
+            flash('Login Failed.', 'danger')
         else:
             login_user(user)
 
@@ -63,5 +65,5 @@ def login():
 @auth.route('/logout')
 def logout():
     logout_user()
-    flash('Logged Out', 'success')
+    flash('Logged Out.', 'success')
     return redirect(url_for('auth.login'))
