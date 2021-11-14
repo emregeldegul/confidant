@@ -24,7 +24,7 @@ def index():
 @login_required
 def search():
     # Fetch form details
-    search_string = request.form.get("searchString")
+    search_string = request.form.get("search_string")
 
     # Tokenize search_string by removing whitespace characters
     keywords = search_string.split()
@@ -33,7 +33,12 @@ def search():
     se = SearchEngine(diaries)
     results = se.search(keywords)
 
-    return render_template('views/diary/search-results.html', title='Search Results', diaries=results)
+    return render_template(
+        'views/diary/search-results.html',
+        title='Search Results',
+        diaries=results,
+        search_string=search_string
+    )
 
 
 @diary.route('/<date>', methods=['GET', 'POST'])

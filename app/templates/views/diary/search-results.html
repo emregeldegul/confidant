@@ -26,7 +26,7 @@
                             <tr class="gradeU">
                                 <td>{{ diary.date }}</td>
                                 <td>{{ diary.show_title() }}</td>
-                                <td><a href="{{ url_for('diary.show', date =  diary.date) }}">Read</a></td>
+                                <td><a href="{{ url_for('diary.show', date =  diary.date) }}#:~:text={{ search_string }}">Read</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
