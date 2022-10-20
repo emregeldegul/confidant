@@ -1,15 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.fields import DateField
+from wtforms import StringField, PasswordField, SubmitField, DateField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms.fields.html5 import DateField
 
 from app.models.user import User
 
 
 class RegisterForm(FlaskForm):
-    name = StringField('Name',
-        validators=[DataRequired()], render_kw={'placeholder': 'Name', 'autofocus': True}
-    )
+    name = StringField('Name', validators=[DataRequired()], render_kw={'placeholder': 'Name', 'autofocus': True})
     birthday = DateField(
         'Birthday', format='%Y-%m-%d', validators=[DataRequired()],
         render_kw={'placeholder': 'Birthday'}
@@ -31,7 +29,7 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_email(self, email):
-        user = User.query.filter_by(email = email.data).first()
+        user = User.query.filter_by(email=email.data).first()
 
         if user:
             raise ValidationError('User is available.')
