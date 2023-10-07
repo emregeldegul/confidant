@@ -8,47 +8,46 @@ from app.models.user import User
 
 
 class ProfileEditForm(FlaskForm):
-    name = StringField('Name',
-        validators=[DataRequired()], render_kw={'placeholder': 'Name', 'autofocus': True}
+    full_name = StringField(
+        "Name", validators=[DataRequired()], render_kw={"placeholder": "Name", "autofocus": True}
     )
     birthday = DateField(
-        'Birthday', format='%Y-%m-%d', validators=[DataRequired()],
-        render_kw={'placeholder': 'Birthday'}
+        "Birthday", format="%Y-%m-%d", validators=[DataRequired()],
+        render_kw={"placeholder": "Birthday"}
     )
     email = StringField(
-        'E-Mail',
+        "E-Mail",
         validators=[DataRequired(), Email()],
-        render_kw={'placeholder': 'E-Mail'}
+        render_kw={"placeholder": "E-Mail"}
     )
 
-    submit = SubmitField('Update')
+    submit = SubmitField("Update")
 
-    def validate_email(self, email):
-        user = User.query.filter_by(email = email.data).first()
+    def validate_email(self, email):  # noqa
+        user = User.query.filter_by(email=email.data).first()
 
         if user:
             if not user == current_user:
-                raise ValidationError('email is available.')
+                raise ValidationError("email is available.")
 
 
 class PasswordEditForm(FlaskForm):
-    current = PasswordField('Current',
-        validators=[DataRequired()],
-        render_kw={'placeholder': 'Curreny', 'autofocus': True}
+    current = PasswordField(
+        "Current", validators=[DataRequired()], render_kw={"placeholder": "Current", "autofocus": True}
     )
-    new = PasswordField('New',
-        validators=[DataRequired(), length(min=6)],
-        render_kw={'placeholder': 'New'}
+    new = PasswordField(
+        "New", validators=[DataRequired(), length(min=6)], render_kw={"placeholder": "New"}
     )
-    repeat_new = PasswordField('Re-Type New',
-        validators=[DataRequired(), EqualTo('new'), length(min=6)],
-        render_kw={'placeholder': 'Re-Type New'}
+    repeat_new = PasswordField(
+        "Re-Type New",
+        validators=[DataRequired(), EqualTo("new"), length(min=6)],
+        render_kw={"placeholder": "Re-Type New"}
     )
 
-    submit = SubmitField('Update')
+    submit = SubmitField("Update")
 
-    def validate_current(self, current):
-        user = User.query.filter_by(id = current_user.id).first()
+    def validate_current(self, current):  # noqa
+        user = User.query.filter_by(id=current_user.id).first()
 
         if not user.check_password(current.data):
-            raise ValidationError('Wrong Password')
+            raise ValidationError("Wrong Password")

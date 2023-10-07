@@ -1,4 +1,4 @@
-{% extends "assets/view_base.html" %}
+{% extends "assets/basics/app.html" %}
 
 {% block content %}
 <div class="row">
@@ -24,9 +24,9 @@
                     <tbody>
                         {% for diary in diaries %}
                             <tr class="gradeU">
-                                <td>{{ diary.date }}</td>
+                                <td>{{ diary.diary_date }}</td>
                                 <td>{{ diary.show_title() }}</td>
-                                <td><a href="{{ url_for('diary.show', date =  diary.date) }}">Read</a></td>
+                                <td><a href="{{ url_for('diary.get_diary', diary_date=diary.diary_date) }}">Read</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -51,12 +51,13 @@
 <script src="{{ url_for('static', filename='assets/vendor/datatables-plugins/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/vendor/datatables-responsive/dataTables.responsive.js') }}"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-  $(document).ready(function() {
-      $('#diaries').DataTable({
-          responsive: true,
-          order: [0, "desc"]
-      });
-  });
+    $(document).ready(function() {
+        $('#diaries').DataTable({
+            responsive: true,
+            order: [0, "desc"]
+        });
+    });
 </script>
 {% endblock %}

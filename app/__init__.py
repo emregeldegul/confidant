@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
 
-from config import Config
+from settings import settings
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -12,26 +12,27 @@ migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(settings)
 
     db.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app, db)
 
-    login_manager.login_view = 'auth.login'
-    login_manager.login_message = 'Please Login'
-    login_manager.login_message_category = 'info'
+    login_manager.login_view = "auth.login"
+    login_manager.login_message = "Please login to access this page."
+    login_manager.login_message_category = "info"
 
-    from app.routes.auth import auth
-    app.register_blueprint(auth)
+    # Inıt Routes
+    from app.routes.auth import auth_bp
+    app.register_blueprint(auth_bp)
 
-    from app.routes.main import main
-    app.register_blueprint(main)
+    from app.routes.main import main_bp
+    app.register_blueprint(main_bp)
 
-    from app.routes.diary import diary
-    app.register_blueprint(diary)
+    from app.routes.diary import diary_bp
+    app.register_blueprint(diary_bp)
 
-    from app.routes.profile import profile
-    app.register_blueprint(profile)
+    from app.routes.profile import profile_bp
+    app.register_blueprint(profile_bp)
 
     return app

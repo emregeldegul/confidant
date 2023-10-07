@@ -24,13 +24,6 @@ And login by creating a membership.
 - [x] Editing Profile / Password
 - [x] Saving Diaries with Encryption
 
-## Screenshots
-### Diary Write and Detail
-![Diary Write And Detail](screenshots/diary_detail.png)
-### Login Panel
-![Login Panel](screenshots/login_panel.png)
-### Register Panel
-![Register Panel](screenshots/register_panel.png)
 
 ## Used Technologies
 * [flask] - Micro web framework

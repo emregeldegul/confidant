@@ -1,4 +1,4 @@
-{% extends "assets/view_base.html" %}
+{% extends "assets/basics/app.html" %}
 {% from "macros/alerts.html" import error, alert %}
 
 {% block content %}
@@ -16,7 +16,7 @@
             <div class="panel-body">
                 {{ error(form) }}
                 {{ alert() }}
-                <form id="form"class="createOrUpdate" action="{{ url_for('diary.create_or_update') }}" method="POST">
+                <form id="form" class="createOrUpdate" action="{{ url_for('diary.create_diary') }}" method="POST">
                     {{ form.csrf_token() }}
                     <div class="row">
                         <div class="col-md-9">
@@ -26,7 +26,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                {{ form.date(class='form-control', value=navigation['day'].date()) }}
+                                {{ form.diary_date(class='form-control', value=navigation['day'].date()) }}
                             </div>
                         </div>
                     </div>
@@ -56,16 +56,16 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <a type="button" class="btn btn-default btn-xs pull-left" href="{{ url_for('diary.show', date=navigation['previous'].date()) }}">
+                                    <a type="button" class="btn btn-default btn-xs pull-left" href="{{ url_for('diary.get_diary', diary_date=navigation['previous'].date()) }}">
                                         <li class="fa fa-angle-double-left"></li> Previous Day
                                     </a>
                                 </div>
                                 <div class="col-md-4">
-                                    <center>{{ navigation['day'].date() }}</center>
+                                    <div style="text-align: center;">{{ navigation['day'].date() }}</div>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <a type="button" class="btn btn-default btn-xs pull-right" href="{{ url_for('diary.show', date=navigation['next'].date()) }}">
+                                    <a type="button" class="btn btn-default btn-xs pull-right" href="{{ url_for('diary.get_diary', diary_date=navigation['next'].date()) }}">
                                         Next Day <li class="fa fa-angle-double-right"></li>
                                     </a>
                                 </div>
@@ -84,7 +84,7 @@
 <script>
     $(document).ready(function() {
         $('.createOrUpdate').submit(function (e) {
-            var url = "{{ url_for('diary.create_or_update') }}";
+            var url = "{{ url_for('diary.create_diary') }}";
             var title = document.getElementById("title").value;
 
             $.ajax({

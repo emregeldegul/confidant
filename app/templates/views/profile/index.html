@@ -1,4 +1,4 @@
-{% extends "assets/view_base.html" %}
+{% extends "assets/basics/app.html" %}
 
 {% block content %}
     <div class="row">
@@ -18,7 +18,7 @@
                             <form class="createOrUpdate" action="" method="POST" id="profile">
                                 {{ profile_form.csrf_token() }}
                                 <div class="form-group">
-                                    {{ profile_form.name(class="form-control") }}
+                                    {{ profile_form.full_name(class="form-control") }}
                                 </div>
                                 <div class="form-group">
                                     {{ profile_form.birthday(class="form-control") }}

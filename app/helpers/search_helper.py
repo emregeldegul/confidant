@@ -14,14 +14,14 @@ POC:
         2.3 Sort the diaries list, most relevant first
 
 Usage:
->>>     se = SearchEngine(list_of_diaries)
+>>>     se = SearchHelper(list_of_diaries)
 >>>     results = se.search(list_of_keywords)
 >>>
 >>>     # results will now contain an ordered list of most relevant diaries
 """
 
 
-class SearchEngine:
+class SearchHelper:
     """Utility class that implements the searching algorithm.
     """
 
