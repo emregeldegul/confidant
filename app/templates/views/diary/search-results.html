@@ -1,4 +1,4 @@
-{% extends "assets/view_base.html" %}
+{% extends "assets/basics/app.html" %}
 
 {% block content %}
 <div class="row">
@@ -24,9 +24,9 @@
                     <tbody>
                         {% for diary in diaries %}
                             <tr class="gradeU">
-                                <td>{{ diary.date }}</td>
+                                <td>{{ diary.diary_date }}</td>
                                 <td>{{ diary.show_title() }}</td>
-                                <td><a href="{{ url_for('diary.show', date =  diary.date) }}#:~:text={{ search_string }}">Read</a></td>
+                                <td><a href="{{ url_for("diary.get_diary", diary_date=diary.diary_date) }}#:~:text={{ search_string }}">Read</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>

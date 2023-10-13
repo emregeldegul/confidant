@@ -14,13 +14,13 @@ class Settings:
 
     # APP Settings
     APP_NAME = getenv("APP_NAME", "Confidant")
-    APP_DESC = getenv("APP_DESC", "Günlük Yazılımı")
+    APP_DESC = getenv("APP_DESC", "Diary Software")
     APP_VERSION = getenv("APP_VERSION", "2.0.0")
     APP_DEVELOPMENT_MODE = getenv("APP_DEVELOPMENT_MODE", True)
 
     # Site Settings
     SITE_TITLE = getenv("SITE_TITLE", "Confidant")
-    SITE_DESC = getenv("SITE_DESC", "Günlük Yazılımı")
+    SITE_DESC = getenv("SITE_DESC", "Diary Software")
     SITE_URL = getenv("SITE_URL", "http://127.0.0.1:5000")
 
     # Author Settings
